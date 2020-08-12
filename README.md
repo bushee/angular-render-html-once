@@ -1,27 +1,20 @@
-# AngularRenderHtmlOnce
+# angular-render-html-once
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.2.1.
+This library helps to keep HTML string rendered once, even if they originally were rendered server-side.
 
-## Development server
+Whenever rendering would occur, and HTML string has already been rendered, resulting DOM elements will be re-used.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+This is quite important when integrating angular app with external code maintained by some other library.
 
-## Code scaffolding
+### Usage
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+#### bootstrap _(optional)_
+Call no-argument static method `RenderHtmlOnceComponent.registerServerSideRenderedComponents()` wherever applicable (eg. in your application module's constructor) to have it scan for any server-side rendered components that could be already used.
 
-## Build
+*Important:* this needs to be done before any angular rendering occurs, since first thing angular does is clearing any existing content of root DOM element.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+#### Component
+- use `<angular-render-html-once>` component wherever you would normally use `[innerHtml]` directive
+- inputs:
+    - `id` *required* - plain old HTML `id` attribute; required to match components whenever they could be destroyed and created again (or created from scratch browser-side and match them with their server-side rendered counterparts)
+    - `htmlContent` *required* - HTML content string you wish to have embedded within component

@@ -18,11 +18,11 @@
       "dom"
     ],
     "paths": {
-      "x": [
-        "dist/x"
+      "angular-render-html-once": [
+        "dist"
       ],
-      "x/*": [
-        "dist/x/*"
+      "angular-render-html-once/*": [
+        "dist/*"
       ]
     }
   }
