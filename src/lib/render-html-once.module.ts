@@ -2,9 +2,8 @@ import { NgModule } from '@angular/core';
 import { RenderHtmlOnceComponent } from './render-html-once.component';
 
 @NgModule({
-  imports: [
-  ],
   declarations: [RenderHtmlOnceComponent],
-  exports: [RenderHtmlOnceComponent]
+  exports: [RenderHtmlOnceComponent],
+  imports: []
 })
 export class RenderHtmlOnceModule { }

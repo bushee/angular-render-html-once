@@ -8,7 +8,7 @@ describe('RenderHtmlOnceComponent', () => {
         RenderHtmlOnceComponent.clearCache();
         hostElement = document.createElement('div');
         component = new RenderHtmlOnceComponent({nativeElement: hostElement});
-        component.id = 'component-id'
+        component.id = 'component-id';
     });
 
     describe('ngOnInit()', () => {

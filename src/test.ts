@@ -6,8 +6,6 @@ import 'zone.js/dist/zone-testing';
 import {getTestBed} from '@angular/core/testing';
 import {BrowserDynamicTestingModule, platformBrowserDynamicTesting} from '@angular/platform-browser-dynamic/testing';
 
-declare const require: any;
-
 // First, initialize the Angular testing environment.
 getTestBed().initTestEnvironment(
     BrowserDynamicTestingModule,
@@ -17,3 +15,15 @@ getTestBed().initTestEnvironment(
 const context = require.context('./', true, /\.spec\.ts$/);
 // And load the modules.
 context.keys().map(context);
+
+declare global {
+    interface NodeRequire {
+        context(directory: string, useSubdirectories: boolean, pattern: RegExp): WebpackRequiredContext;
+    }
+}
+
+export interface WebpackRequiredContext extends NodeRequireFunction {
+    id: string;
+    keys: () => string[];
+    resolve: () => string;
+}
