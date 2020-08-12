@@ -25,10 +25,12 @@ export class RenderHtmlOnceComponent implements OnInit {
     }
 
     public static registerServerSideRenderedComponents(): void {
-        const elements = window.document.getElementsByTagName('render-html-once');
-        for (let i = 0; i < elements.length; ++i) {
-            const element = elements[i];
-            RenderHtmlOnceComponent.alreadyRendered[element.id] = element;
+        if (window && window.document && window.document.getElementsByTagName) {
+            const elements = window.document.getElementsByTagName('render-html-once');
+            for (let i = 0; i < elements.length; ++i) {
+                const element = elements[i];
+                RenderHtmlOnceComponent.alreadyRendered[element.id] = element;
+            }
         }
     }
 
