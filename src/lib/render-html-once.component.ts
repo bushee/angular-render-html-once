@@ -15,15 +15,14 @@ export class RenderHtmlOnceComponent implements OnInit {
 
     public ngOnInit(): void {
         if (!RenderHtmlOnceComponent.enabled) {
+            this.renderFromString();
             return;
         }
         const cacheHit = RenderHtmlOnceComponent.alreadyRendered[this.id];
         if (cacheHit) {
-            while (cacheHit.childNodes.length) {
-                this.hostElement.nativeElement.appendChild(cacheHit.firstChild);
-            }
+            this.renderFromCacheHit(cacheHit);
         } else {
-            this.hostElement.nativeElement.innerHTML = this.htmlContent;
+            this.renderFromString();
         }
         RenderHtmlOnceComponent.alreadyRendered[this.id] = this.hostElement.nativeElement;
     }
@@ -51,5 +50,15 @@ export class RenderHtmlOnceComponent implements OnInit {
 
     public static disable(): void {
         RenderHtmlOnceComponent.enabled = false;
+    }
+
+    private renderFromString(): void {
+        this.hostElement.nativeElement.innerHTML = this.htmlContent;
+    }
+
+    private renderFromCacheHit(cacheHit: Element): void {
+        while (cacheHit.childNodes.length) {
+            this.hostElement.nativeElement.appendChild(cacheHit.firstChild);
+        }
     }
 }
