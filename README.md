@@ -8,6 +8,9 @@ This is quite important when integrating angular app with external code maintain
 
 ### Usage
 
+#### enabing/disabling
+One-time rendering is enabled by default. If you wish to disable it permanently, use `RenderHtmlOnceComponent.disable()` static method - it will prevent from caching/using cache from now on. Complementary static method `RenderHtmlOnce.enable()` will enable it again.
+
 #### bootstrap _(optional)_
 Call no-argument static method `RenderHtmlOnceComponent.registerServerSideRenderedComponents()` wherever applicable (eg. in your application module's constructor) to have it scan for any server-side rendered components that could be already used.
 

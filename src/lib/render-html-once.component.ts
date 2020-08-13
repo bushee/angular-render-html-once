@@ -6,6 +6,7 @@ import {Component, ElementRef, Input, OnInit} from '@angular/core';
 })
 export class RenderHtmlOnceComponent implements OnInit {
     private static alreadyRendered: Record<string, Element> = {};
+    private static enabled: boolean = true;
 
     @Input() public id: string;
     @Input() public htmlContent: string;
@@ -13,6 +14,9 @@ export class RenderHtmlOnceComponent implements OnInit {
     public constructor(private hostElement: ElementRef<Element>) {}
 
     public ngOnInit(): void {
+        if (!RenderHtmlOnceComponent.enabled) {
+            return;
+        }
         const cacheHit = RenderHtmlOnceComponent.alreadyRendered[this.id];
         if (cacheHit) {
             while (cacheHit.childNodes.length) {
@@ -25,6 +29,9 @@ export class RenderHtmlOnceComponent implements OnInit {
     }
 
     public static registerServerSideRenderedComponents(): void {
+        if (!RenderHtmlOnceComponent.enabled) {
+            return;
+        }
         if (window && window.document && window.document.getElementsByTagName) {
             const elements = window.document.getElementsByTagName('render-html-once');
             for (let i = 0; i < elements.length; ++i) {
@@ -36,5 +43,13 @@ export class RenderHtmlOnceComponent implements OnInit {
 
     public static clearCache(): void {
         RenderHtmlOnceComponent.alreadyRendered = {};
+    }
+
+    public static enable(): void {
+        RenderHtmlOnceComponent.enabled = true;
+    }
+
+    public static disable(): void {
+        RenderHtmlOnceComponent.enabled = false;
     }
 }
