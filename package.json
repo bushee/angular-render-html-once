@@ -11,7 +11,8 @@
         "build": "ng build",
         "postbuild": "sed -i '' 's/\"private\": true,/\"private\": false,/' dist/package.json",
         "test": "ng test",
-        "lint": "ng lint"
+        "lint": "ng lint",
+        "publish": "npm run build && cd dist && npm publish"
     },
     "license": "MIT",
     "private": true,
