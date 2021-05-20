@@ -17,7 +17,7 @@ Call no-argument static method `RenderHtmlOnceComponent.registerServerSideRender
 **Important:** this needs to be done before any angular rendering occurs, since first thing angular does is clearing any existing content of root DOM element.
 
 #### Component
-- use `<angular-render-html-once>` component wherever you would normally use `[innerHtml]` directive
+- use `<render-html-once>` component wherever you would normally use `[innerHtml]` directive
 - inputs:
     - `id` **required** - plain old HTML `id` attribute; required to match components whenever they could be destroyed and created again (or created from scratch browser-side and match them with their server-side rendered counterparts)
     - `htmlContent` **required** - HTML content string you wish to have embedded within component
