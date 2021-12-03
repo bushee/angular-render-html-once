@@ -7,14 +7,21 @@ import {Component, ElementRef, Input, OnInit} from '@angular/core';
 export class RenderHtmlOnceComponent implements OnInit {
     private static alreadyRendered: Record<string, Element> = {};
     private static enabled: boolean = true;
+    private enabled: boolean = true;
 
     @Input() public id: string;
     @Input() public htmlContent: string;
+    @Input() public set cacheable(enabled: boolean) {
+        this.enabled = enabled;
+        if (!enabled) {
+            delete RenderHtmlOnceComponent.alreadyRendered[this.id];
+        }
+    }
 
     public constructor(private hostElement: ElementRef<Element>) {}
 
     public ngOnInit(): void {
-        if (!RenderHtmlOnceComponent.enabled) {
+        if (!RenderHtmlOnceComponent.enabled || !this.enabled) {
             this.renderFromString();
             return;
         }

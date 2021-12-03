@@ -21,6 +21,7 @@ Call no-argument static method `RenderHtmlOnceComponent.registerServerSideRender
 - inputs:
     - `id` **required** - plain old HTML `id` attribute; required to match components whenever they could be destroyed and created again (or created from scratch browser-side and match them with their server-side rendered counterparts)
     - `htmlContent` **required** - HTML content string you wish to have embedded within component
+    - `cacheable` _(optional; default: `true`)_ - allows enabling/disabling caching of specific `<render-html-once>` instance; turning it off in runtime also clears instance-related cache
     
 ### Requirements
 - angular ^8.0.0
