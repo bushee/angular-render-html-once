@@ -6,6 +6,7 @@ describe('RenderHtmlOnceComponent', () => {
 
     beforeEach(() => {
         RenderHtmlOnceComponent.clearCache();
+        RenderHtmlOnceComponent.enable();
         hostElement = document.createElement('div');
         component = new RenderHtmlOnceComponent({nativeElement: hostElement});
         component.id = 'component-id';
@@ -73,6 +74,51 @@ describe('RenderHtmlOnceComponent', () => {
             // then
             expect(hostElement.childNodes.length).toBe(1);
             expect(hostElement.childNodes[0]).toBe(originalDivElement);
+        });
+
+        it('should always render passed html if cache is disabled globally', () => {
+            // given
+            RenderHtmlOnceComponent.disable();
+
+            // and
+            component.htmlContent = '<div>original div element</div>';
+            component.ngOnInit();
+            const originalDivElement = hostElement.childNodes[0];
+
+            // and
+            const newHostElement = document.createElement('div');
+            const newComponent = new RenderHtmlOnceComponent({nativeElement: newHostElement});
+            newComponent.id = component.id;
+
+            // when
+            newComponent.ngOnInit();
+
+            // then
+            expect(hostElement.childNodes.length).toBe(1);
+            expect(newHostElement.childNodes.length).toBe(1);
+            expect(newHostElement.childNodes[0]).not.toBe(originalDivElement);
+        });
+
+        it('should always render passed html if cache is disabled for specific instance', () => {
+            // given
+            component.htmlContent = '<div>original div element</div>';
+            component.cacheable = false;
+            component.ngOnInit();
+            const originalDivElement = hostElement.childNodes[0];
+
+            // and
+            const newHostElement = document.createElement('div');
+            const newComponent = new RenderHtmlOnceComponent({nativeElement: newHostElement});
+            newComponent.cacheable = false;
+            newComponent.id = component.id;
+
+            // when
+            newComponent.ngOnInit();
+
+            // then
+            expect(hostElement.childNodes.length).toBe(1);
+            expect(newHostElement.childNodes.length).toBe(1);
+            expect(newHostElement.childNodes[0]).not.toBe(originalDivElement);
         });
     });
 });
